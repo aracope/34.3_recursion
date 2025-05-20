@@ -49,9 +49,19 @@ Be careful that we don't "simplify" a set of matching mixed squares:
 
 def simplify(s):
     """Simplify a split square:"""
+    if isinstance(s, int):
+        return s
 
+    # Recursively simplify each part
+    simplified_parts = [simplify(part) for part in s]
+
+    # If all parts are the same (and not lists), collapse to a single value
+    if all(part == simplified_parts[0] and isinstance(part, int) for part in simplified_parts):
+        return simplified_parts[0]
+    else:
+        return simplified_parts
 
 if __name__ == "__main__":
     import doctest
     if doctest.testmod().failed == 0:
-        print "\n*** ALL TESTS PASS; YOU MADE THAT SEEM SIMPLE!!\n"
+        print("\n*** ALL TESTS PASS; YOU MADE THAT SEEM SIMPLE!!\n")
